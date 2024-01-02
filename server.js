@@ -1,5 +1,6 @@
 const http = require("http");
 const fs = require("fs/promises");
+const { v4: uuidv4 } = require("uuid");
 
 const server = http.createServer((request, response) => {
   const { method, url } = request;
@@ -40,35 +41,42 @@ const server = http.createServer((request, response) => {
     });
   }
 
-  if (url === '/api/books' && method === 'POST') {
-    let body = '';
-    request.on('data', (packet) => {
+  if (url === "/api/books" && method === "POST") {
+    let body = "";
+    request.on("data", (packet) => {
       body += packet;
     });
 
-    request.on('end', async () => {
-    try {
-      response.statusCode = 200;
-      response.setHeader("Content-Type", "application/json");
-      const newBook = JSON.parse(body);
-      newBook.bookId = Math.floor(Math.random() * 1000);
-      const oldBooks = JSON.parse(await fs.readFile('./data/books.json', 'utf-8'));
-      oldBooks.push(newBook);
-      fs.writeFile("./data/books.json", JSON.stringify(oldBooks, null, 2));
-      response.end(JSON.stringify(newBook));
-    } catch {
-      response.statusCode = 500;
-      response.setHeader("Content-Type", "application/json");
-      response.end(JSON.stringify({ Error: "Could not add the book."}))
-    }
+    request.on("end", async () => {
+      try {
+        response.writeHead(201, {
+          "Content-Type": "application/json",
+        });
+
+        const newBook = JSON.parse(body);
+        newBook.bookId = uuidv4();
+
+        const oldBooks = JSON.parse(
+          await fs.readFile("./data/books.json", "utf-8")
+        );
+        oldBooks.push(newBook);
+
+        fs.writeFile("./data/books.json", JSON.stringify(oldBooks, null, 2));
+        response.end(JSON.stringify(newBook));
+      } catch {
+        response.writeHead(500, {
+          "Content-Type": "application/json",
+        });
+        response.end(JSON.stringify({ Error: "Could not add the book." }));
+      }
     });
   }
 });
 
-server.listen(3000, (err) => {
+server.listen(6969, (err) => {
   if (err) {
     console.log(err);
   } else {
-    console.log("Server is running on port 3000");
+    console.log("Server is running on port 6969");
   }
 });
