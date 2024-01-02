@@ -88,5 +88,17 @@
     "bookTitle": "The Da Vinci Code",
     "authorId": 1,
     "isFiction": true
+  },
+  {
+    "bookId": 16,
+    "bookTitle": "Peter Pan",
+    "authorId": 15,
+    "isFiction": true
+  },
+  {
+    "bookTitle": "Peter Pan 2",
+    "authorId": 15,
+    "isFiction": true,
+    "bookId": 367
   }
 ]
