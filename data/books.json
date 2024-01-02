@@ -100,5 +100,16 @@
     "authorId": 15,
     "isFiction": true,
     "bookId": 367
+  },
+  {
+    "bookId": "6db6a0f6-6b36-44ec-bf01-36d78eb2f782",
+    "bookTitle": "A Brief History of Life",
+    "isFiction": false
+  },
+  {
+    "bookId": "648f07b2-bb34-4a50-b16e-58337088243a",
+    "bookTitle": "Fake Book",
+    "authorId": 30,
+    "isFiction": false
   }
 ]
